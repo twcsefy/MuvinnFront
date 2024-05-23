@@ -14,7 +14,7 @@ import {
 } from 'react-native';
 import { Button, Card } from 'react-native-paper';
 import Footer from '../components/Footer';
-import Head from '../components/Header';
+import Head from '../components/Head';
 
 const renderItem = ({ item }: { item: Anuncio }) => (
     <View style={styles.item}>

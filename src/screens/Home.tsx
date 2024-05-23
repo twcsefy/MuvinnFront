@@ -3,7 +3,7 @@ import { ImageBackground, ScrollView, StatusBar, StyleSheet, Text, View, } from 
 import Footer from "../components/Footer";
 import { useNavigation } from "@react-navigation/native";
 import { Button, Card } from "react-native-paper";
-import Head from "../components/Header";
+import Head from "../components/Head";
 
 function Home() {
   const navigation = useNavigation();
