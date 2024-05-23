@@ -3,9 +3,8 @@ import React, { useState } from "react";
 import { Image, StatusBar, StyleSheet, Text, TextInput, Touchable, TouchableOpacity, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import Footer from "../components/Footer";
-import Header from "../components/Header";
 
-function CadastroImovel(): React.JSX.Element{
+function CadastroScreen(): React.JSX.Element{
 
     const [estado, setEstado] = useState("");
     const [cidade, setCidade] = useState("");
@@ -33,7 +32,7 @@ function CadastroImovel(): React.JSX.Element{
             
 
             console.log(formData)
-            const response = await axios.post('http://10.137.11.212:8000/api/imovel/criar', formData, {
+            const response = await axios.post('http://10.137.11.211:8000/api/imovel/criar', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }
@@ -46,66 +45,76 @@ function CadastroImovel(): React.JSX.Element{
 
     return(
         <View style={styles.container}>
-            <Header />
             <ScrollView showsVerticalScrollIndicator={false}>
-            <StatusBar hidden />
+            <StatusBar hidden barStyle={"light-content"} backgroundColor={"black"} />
+            <Image
+                    source={require('../assets/images/logo.png')}
+                    style={styles.logo} />
 
             <View>
                 
                 <TextInput
                 style={styles.input} 
                 placeholder="Estado" 
-                placeholderTextColor={"#f4f4f6"} 
+                placeholderTextColor={"#151413"} 
                 onChangeText={(texteEstado) => setEstado(texteEstado)}
                 />
                 
                 <TextInput
                 style={styles.input} 
                 placeholder="Cidade" 
-                placeholderTextColor={"#f4f4f6"} 
+                placeholderTextColor={"#151413"} 
                 onChangeText={(texteCidade) => setCidade(texteCidade)}
+                
                 />
                 <TextInput
                 style={styles.input} 
                 placeholder="Endereço" 
-                placeholderTextColor={"#f4f4f6"} 
+                placeholderTextColor={"#151413"} 
                 onChangeText={(texteEndereco) => setEndereco(texteEndereco)}
+                
                 />
                 <TextInput
                 style={styles.input} 
                 placeholder="Tipo do Imóvel" 
-                placeholderTextColor={"#f4f4f6"} 
+                placeholderTextColor={"#151413"} 
                 onChangeText={(texteTipos_imoveis) => setTipos_imoveis(texteTipos_imoveis)}
+                
                 />
                 <TextInput
                 style={styles.input} 
                 placeholder="Preço" 
-                placeholderTextColor={"#f4f4f6"} 
+                placeholderTextColor={"#151413"} 
                 onChangeText={(textePreco) => setPreco(textePreco)}
+                
                 />
                 <TextInput
                 style={styles.input} 
                 placeholder="Banheiros" 
-                placeholderTextColor={"#f4f4f6"} 
+                placeholderTextColor={"#151413"} 
                 onChangeText={(texteBanheiros) => setBanheiros(texteBanheiros)}
+                
                 />
                 <TextInput
                 style={styles.input} 
                 placeholder="Quartos" 
-                placeholderTextColor={"#f4f4f6"} 
+                placeholderTextColor={"#151413"} 
                 onChangeText={(texteQuartos) => setQuartos(texteQuartos)}
+                
                 />
                 <TextInput
                 style={styles.input} 
                 placeholder="Vagas" 
-                placeholderTextColor={"#f4f4f6"} 
+                placeholderTextColor={"#151413"} 
                 onChangeText={(texteVagas) => setVagas(texteVagas)}
+                
                 />
                 <TextInput
                 style={styles.input} 
                 placeholder="Área do Imóvel" 
-                placeholderTextColor={"#f4f4f6"} 
+                placeholderTextColor={"#151413"} 
                 onChangeText={(texteArea_do_Imovel) => setArea_do_imovel(texteArea_do_Imovel)}
+                
                 />
                 </View>
                 <View>
@@ -114,11 +123,11 @@ function CadastroImovel(): React.JSX.Element{
                 onPress={()=>{CadastroScreen()}}>
                     <Text style={styles.buttonText}>Cadastrar</Text>
                 </TouchableOpacity>
+
                 </View>
             
             </ScrollView>
             <Footer />
-            
         </View>
         
     );
@@ -129,31 +138,58 @@ const styles =StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#66666e'
+        backgroundColor: '#edf2fa'
+    },
+    logo: {
+        width: 300,
+        height: 300,
+        marginBottom: -120,
+        marginTop: -69
+        
+    },
+    title: {
+        fontSize: 25,
+        fontWeight: 'bold',
+        color: '#151413',
+        marginBottom: 20,
+        textAlign: 'center',
+
     },
     input: {
         borderBottomWidth: 1,
-        borderBottomColor: '#e6e6e9',
+        borderBottomColor: 'black',
         height: 40,
         marginBottom: 20,
-        paddingHorizontal: 180,
-        paddingLeft: 1
+        paddingHorizontal: 10,
+        
     },
     button: {
-        backgroundColor: '#9999a1',
+        backgroundColor: '#7b5bf2',
         borderRadius: 8,
+        borderWidth: 1,
+        borderColor: '#d6ccc2',
         height: 40,
 
     },
     buttonText: {
-        color: '#f4f4f6',
+        color: '#FFFFFF',
         textAlign: 'center',
-        fontSize: 16,
+        fontSize: 17,
         lineHeight: 40,
        
 
     },
+    forgotPassword: {
+        color: 'black',
+        textAlign: 'center',
+        marginTop: 10,
+        fontSize: 14
+
+    },
+    footer: {
+        width: 100,
+    },
 
 });
 
-export default CadastroImovel;
+export default CadastroScreen;

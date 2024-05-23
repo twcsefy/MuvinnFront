@@ -1,10 +1,10 @@
 import React from "react";
 import { Image, StyleSheet, Text, View } from "react-native";
 
-function Header(): React.JSX.Element {
+function Head(): React.JSX.Element {
     return (
         <View >
-           <Image source={require('../assets/images/logo.png')}
+           <Image source={require('../assets/images/logo2.png')}
                 style={styles.logo} />
         </View>
     );
@@ -23,4 +23,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default Header;
+export default Head;
