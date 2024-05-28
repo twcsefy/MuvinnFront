@@ -3,6 +3,7 @@ import { Anuncio } from '../components/interface/AnuncioInterface';
 import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
 import {
+  Alert,
   FlatList,
   Image,
   SafeAreaView,
@@ -15,30 +16,33 @@ import {
 import { Button, Card } from 'react-native-paper';
 import Footer from '../components/Footer';
 
-const renderItem = ({ item }: { item: Anuncio }) => (
-    <View style={styles.item}>
-      <Card style={{ backgroundColor: '#9999a1'}}>
-        <Card.Title title="Casa rustica " subtitle="Mais informações abaixo" titleStyle={styles.titleColor} subtitleStyle={styles.subtitleColor} />
-        <Card.Content>
-          <Text style={styles.textTitle}>Estado: {item.estado}</Text>
-          <Text style={styles.textTitle}>Cidade: {item.cidade}</Text>
-          <Text style={styles.textTitle}>Endereço: {item.endereco}</Text>
-          <Text style={styles.textTitle}>Tipo de imovel: {item.tipos_imoveis}</Text>
-          <Text style={styles.textItem}>R${item.preco}</Text>
-          <Text style={styles.textTitle}>Qtd. Banheiros: {item.banheiros}</Text>
-          <Text style={styles.textTitle}>Quartos: {item.quartos}</Text>
-          <Text style={styles.textTitle}>Vagas: {item.vagas}</Text>
-          <Text style={styles.textTitle}>Área do imovel: {item.area_do_imovel}m²</Text>
-          <Image source={item.image ? {uri:item.image}: require('../assets/images/house.png')}  style={styles.image} />
-        </Card.Content>
-        <Card.Actions>
-            <Button>
-                <Text style={styles.textButton}>Entrar em contato</Text>
-            </Button>
-        </Card.Actions>
-      </Card>
-    </View>
-  );
+const renderItem = ({ item, handleEdit, handleDelete }: { item: Anuncio, handleEdit: (item: Anuncio) => void, handleDelete: (id: string) => void }) => (
+  <View style={styles.item}>
+    <Card style={{ backgroundColor: '#9999a1' }}>
+      <Card.Title title="Casa rustica " subtitle="Mais informações abaixo" titleStyle={styles.titleColor} subtitleStyle={styles.subtitleColor} />
+      <Card.Content>
+        <Text style={styles.textTitle}>Estado: {item.estado}</Text>
+        <Text style={styles.textTitle}>Cidade: {item.cidade}</Text>
+        <Text style={styles.textTitle}>Endereço: {item.endereco}</Text>
+        <Text style={styles.textTitle}>Tipo de imovel: {item.tipos_imoveis}</Text>
+        <Text style={styles.textItem}>R${item.preco}</Text>
+        <Text style={styles.textTitle}>Qtd. Banheiros: {item.banheiros}</Text>
+        <Text style={styles.textTitle}>Quartos: {item.quartos}</Text>
+        <Text style={styles.textTitle}>Vagas: {item.vagas}</Text>
+        <Text style={styles.textTitle}>Área do imovel: {item.area_do_imovel}m²</Text>
+        <Image source={item.image? { uri: item.image } : require('../assets/images/house.png')} style={styles.image} />
+      </Card.Content>
+      <Card.Actions>
+        <Button buttonColor='darkblue' onPress={() => handleEdit(item)}>
+          <Text style={styles.textButton}>Editar</Text>
+        </Button>
+        <Button buttonColor='darkred' onPress={() => handleDelete(item.id)}>
+          <Text style={styles.textButton}>Deletar</Text>
+        </Button>
+      </Card.Actions>
+    </Card>
+  </View>
+);
 
 function Listagem(): React.JSX.Element {
   const [anuncio, setAnuncio] = useState<Anuncio[]>([]);
@@ -47,7 +51,7 @@ function Listagem(): React.JSX.Element {
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await axios.get('http://10.137.11.211:8000/api/imovel/retornarTodos');
+        const response = await axios.get('http://10.137.11.212:8000/api/imovel/retornarTodos');
         setAnuncio(response.data.data);
         console.log(response.data.data);
       } catch (error) {
@@ -59,6 +63,37 @@ function Listagem(): React.JSX.Element {
   }, []);
 
   const navigation = useNavigation();
+
+  const handleDelete = async (id: string) => {
+    Alert.alert(
+      "Deletar Anúncio",
+      "Você tem certeza que deseja deletar este anúncio?",
+      [
+        {
+          text: "Cancelar",
+          style: "cancel"
+        },
+        {
+          text: "Deletar",
+          onPress: async () => {
+            try {
+              await axios.delete(`http://10.137.11.211:8000/api/imovel/delete/${id}`);
+              const newAnuncio = anuncio.filter((item) => item.id!== id);
+              setAnuncio(newAnuncio);
+              Alert.alert("Anúncio deletado com sucesso.");
+            } catch (error) {
+              console.error(error);
+              Alert.alert("Ocorreu um erro ao deletar o anúncio.");
+            }
+          }
+        }
+      ]
+    );
+  };
+
+  const handleEdit = (item: Anuncio) => {
+    navigation.navigate('EditarAnuncio', { item });
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -72,7 +107,7 @@ function Listagem(): React.JSX.Element {
         )}
         showsVerticalScrollIndicator={false}
         data={anuncio}
-        renderItem={renderItem}
+        renderItem={({ item }) => renderItem({ item, handleEdit, handleDelete })}
         keyExtractor={(item) => item.id.toString()}
       />
       <Footer/>
@@ -80,10 +115,11 @@ function Listagem(): React.JSX.Element {
   );
 }
 
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#ffc1d5',
+    backgroundColor: '#66666e',
   },
   item: {
     opacity: 1,
@@ -92,7 +128,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 15,
     borderRadius: 15,
     borderWidth: 2,
-    borderColor: '#ffe4ec',
+    borderColor: '#e6e6e9',
   },
   header: {
     opacity: 1,
@@ -105,12 +141,12 @@ const styles = StyleSheet.create({
     height: 30,
   },
   textItem: {
-    color: '#ffe4ec',
+    color: '#f4f4f6',
     fontSize: 15,
     fontWeight: 'bold',
   },
   textItem2: {
-    color: '#ffe4ec',
+    color: '#f4f4f6',
     fontSize: 20,
     fontWeight: 'bold',
   },
@@ -130,7 +166,7 @@ const styles = StyleSheet.create({
     alignItems: 'flex-end',
   },
   textEspeciais: {
-    color: '#ffc1d5',
+    color: '#f4f4f6',
     fontSize: 20,
     fontWeight: 'bold',
     textAlign: 'center',
@@ -152,7 +188,7 @@ const styles = StyleSheet.create({
     marginLeft: 'auto',
   },
     textTitle: {
-        color: '#ffc1d5',
+        color: '#f4f4f6',
         fontSize: 15,
         fontWeight: 'bold'
     },
@@ -176,16 +212,16 @@ const styles = StyleSheet.create({
         marginTop: 6,
         fontSize: 16,
         fontWeight: 'bold',
-        color: '#ffc1d5'
+        color: '#f4f4f6'
     },
     buttonColor: {
-        color: '#ffc1d5'
+        color: '#5c6b73'
     },
     titleColor: {
-      color: '#ffc1d5'
+      color: '#f4f4f6'
     },
     subtitleColor: {
-      color: '#ffc1d5'
+      color: '#f4f4f6'
     }
 })
 export default Listagem;
