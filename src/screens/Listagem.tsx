@@ -14,7 +14,6 @@ import {
 } from 'react-native';
 import { Button, Card } from 'react-native-paper';
 import Footer from '../components/Footer';
-import Head from '../components/Head';
 
 const renderItem = ({ item }: { item: Anuncio }) => (
     <View style={styles.item}>
@@ -33,11 +32,8 @@ const renderItem = ({ item }: { item: Anuncio }) => (
           <Image source={item.image ? {uri:item.image}: require('../assets/images/house.png')}  style={styles.image} />
         </Card.Content>
         <Card.Actions>
-            <Button buttonColor='darkblue'>
-            <Text style={styles.textButton}>Editar</Text>
-            </Button>
-            <Button buttonColor='darkred'>
-                <Text style={styles.textButton}>Deletar Anuncio</Text>
+            <Button>
+                <Text style={styles.textButton}>Entrar em contato</Text>
             </Button>
         </Card.Actions>
       </Card>
@@ -68,7 +64,7 @@ function Listagem(): React.JSX.Element {
     <SafeAreaView style={styles.container}>
       <StatusBar backgroundColor="black" barStyle="light-content" />
       <View style={styles.header}>
-        <Head />
+        <Image source={require('../assets/images/logo.png')} style={styles.logo} />
       </View>
       <FlatList
         ListHeaderComponent={() => (
@@ -87,7 +83,7 @@ function Listagem(): React.JSX.Element {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#66666e',
+    backgroundColor: '#ffc1d5',
   },
   item: {
     opacity: 1,
@@ -96,7 +92,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 15,
     borderRadius: 15,
     borderWidth: 2,
-    borderColor: '#e6e6e9',
+    borderColor: '#ffe4ec',
   },
   header: {
     opacity: 1,
@@ -109,12 +105,12 @@ const styles = StyleSheet.create({
     height: 30,
   },
   textItem: {
-    color: '#f4f4f6',
+    color: '#ffe4ec',
     fontSize: 15,
     fontWeight: 'bold',
   },
   textItem2: {
-    color: '#f4f4f6',
+    color: '#ffe4ec',
     fontSize: 20,
     fontWeight: 'bold',
   },
@@ -123,6 +119,7 @@ const styles = StyleSheet.create({
     height: 300,
     marginBottom: -120,
     marginTop: -69,
+
   },
   image: {
     width: 250,
@@ -133,7 +130,7 @@ const styles = StyleSheet.create({
     alignItems: 'flex-end',
   },
   textEspeciais: {
-    color: '#f4f4f6',
+    color: '#ffc1d5',
     fontSize: 20,
     fontWeight: 'bold',
     textAlign: 'center',
@@ -155,7 +152,7 @@ const styles = StyleSheet.create({
     marginLeft: 'auto',
   },
     textTitle: {
-        color: '#f4f4f6',
+        color: '#ffc1d5',
         fontSize: 15,
         fontWeight: 'bold'
     },
@@ -179,19 +176,16 @@ const styles = StyleSheet.create({
         marginTop: 6,
         fontSize: 16,
         fontWeight: 'bold',
-        color: '#f4f4f6'
-    },
-    textButtonDelete: {
-      color: 'red'
+        color: '#ffc1d5'
     },
     buttonColor: {
-        color: '#5c6b73'
+        color: '#ffc1d5'
     },
     titleColor: {
-      color: '#f4f4f6'
+      color: '#ffc1d5'
     },
     subtitleColor: {
-      color: '#f4f4f6'
+      color: '#ffc1d5'
     }
 })
 export default Listagem;
