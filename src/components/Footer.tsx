@@ -12,16 +12,12 @@ function Footer(): React.JSX.Element {
                 <Image source={require('../assets/images/muvinn.png')}
                 style={styles.footerIcone} />
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => navigation.navigate('CadastrarImovel')}>
+            <TouchableOpacity onPress={() => navigation.navigate('Cadastro')}>
                 <Image source={require('../assets/images/cadastro.png')}
                 style={styles.footerIcone} />
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => navigation.navigate('List')}>
+            <TouchableOpacity onPress={() => navigation.navigate('Listagem')}>
                 <Image source={require('../assets/images/list.png')}
-                style={styles.footerIcone} />
-            </TouchableOpacity>
-            <TouchableOpacity onPress={() => navigation.navigate('Pesquisar')}>
-                <Image source={require('../assets/images/lupe.png')}
                 style={styles.footerIcone} />
             </TouchableOpacity>
         </View>

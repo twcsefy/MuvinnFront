@@ -33,7 +33,7 @@ function CadastroImovel(): React.JSX.Element{
             
 
             console.log(formData)
-            const response = await axios.post('http://10.137.11.212:8000/api/imovel/criar', formData, {
+            const response = await axios.post('http://10.137.11.210:8000/api/imovel/criar', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }
